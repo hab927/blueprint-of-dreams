@@ -6,6 +6,7 @@ public class TeleportManager : MonoBehaviour
     public int currentWorld = 0;
     public CharacterController controller;
     public Vector3 worldOffset = new (100, 0, 0);
+
     private void Awake()
     {
         if (instance != null && instance != this)
