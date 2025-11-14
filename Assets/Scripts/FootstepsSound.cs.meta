@@ -1,0 +1,13 @@
+fileFormatVersion: 2
+guid: 237a039a40df99d42b3d1bce8a2a265e
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - footstepAudioSource: {instanceID: 0}
+  - footstepClip: {fileID: 8300000, guid: 032a6973e8ae934488014f6a6645a25f, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
