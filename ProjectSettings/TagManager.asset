@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Key
   - Gate
+  - Complete
   layers:
   - Default
   - TransparentFX
