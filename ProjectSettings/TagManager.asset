@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - item
+  - placement
   layers:
   - Default
   - TransparentFX
@@ -13,8 +15,8 @@ TagManager:
   - UI
   - light_layer_blueprint
   - light_layer_nightmare
-  - 
-  - 
+  - interactable
+  - outline
   - 
   - 
   - 
