@@ -76,7 +76,7 @@ public class player : MonoBehaviour
 
         cameraTransform = MouseCamera.instance.transform;
         horizontalVec = Input.GetAxis("Horizontal") * new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
-        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x + cameraTransform.up.x, 0, cameraTransform.forward.z + cameraTransform.up.z);
+        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x + Math.Abs(cameraTransform.up.x), 0, cameraTransform.forward.z + Math.Abs(cameraTransform.up.z));
         moveVector = new Vector3(horizontalVec.x + forwardVec.x, 0, horizontalVec.z + forwardVec.z);
         if (moveVector.magnitude > 1)
         {

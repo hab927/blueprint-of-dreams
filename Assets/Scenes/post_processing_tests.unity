@@ -1708,6 +1708,11 @@ MonoBehaviour:
   gravity: -7
   jumpStrength: 2
   sprintMult: 1.5
+  pickupAudioSource: {fileID: 0}
+  pickupAudioClip: {fileID: 0}
+  yayAudioSource: {fileID: 0}
+  yayAudioClip: {fileID: 0}
+  hasKey: 0
 --- !u!143 &957020032
 CharacterController:
   m_ObjectHideFlags: 0
@@ -2676,7 +2681,19 @@ MonoBehaviour:
         m_CallState: 2
   On_Item_Placed:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 0
 --- !u!1 &2017899173
 GameObject:
   m_ObjectHideFlags: 0

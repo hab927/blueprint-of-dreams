@@ -41,7 +41,13 @@ public class interaction_object_functions : MonoBehaviour
         {
             On_Item_Placed.Invoke();
         }
+    }
 
+    public void dropItem(Transform item, Vector3 position_offset)
+    {
+        item.parent = null;
+        item.localPosition = position_offset;
+        item.localRotation = Quaternion.identity;
     }
 
     public void lerpOutlineInHelper()

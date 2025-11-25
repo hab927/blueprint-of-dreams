@@ -14,6 +14,8 @@ public class player_hand_manager : MonoBehaviour
     public Vector3 hand_offset;
     [Header("item grab references")]
     public Transform grabbed_item;
+    [Header("item grab flags")]
+    public bool item_held = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,10 +66,11 @@ public class player_hand_manager : MonoBehaviour
                         //UnityEngine.Debug.Log("picked up an item!");
                         object_behavior.pickupItem(transform, hand_offset);
                         grabbed_item = object_behavior.transform;
+                        item_held = true;
                         break;
                     case "placement":
                         //UnityEngine.Debug.Log("object is a pedestal");
-                        if(grabbed_item != null)
+                        if (grabbed_item != null)
                         {
                             //UnityEngine.Debug.Log("placed an item!");
                             object_behavior.placeItem(grabbed_item, new Vector3(0, 0.5f, 0));
@@ -77,7 +80,7 @@ public class player_hand_manager : MonoBehaviour
                         else
                         {
                             object_behavior = object_behavior.transform.GetChild(0).GetComponent<interaction_object_functions>();
-                            if(object_behavior != null)
+                            if (object_behavior != null)
                             {
                                 object_behavior.pickupItem(transform, hand_offset);
                                 grabbed_item = object_behavior.transform;
@@ -85,8 +88,18 @@ public class player_hand_manager : MonoBehaviour
                         }
                         break;
                     default:
+                        UnityEngine.Debug.Log("dropped on ground");
                         break;
                 }
+            }
+        }
+        else if (Input.GetKeyDown(KeyCode.E) && item_held)
+        {
+            if (grabbed_item != null)
+            {
+                transform.GetComponentInChildren<interaction_object_functions>().dropItem(grabbed_item, transform.position - new Vector3(0, 1.3f, 0));
+                grabbed_item = null;
+                item_held = false;
             }
         }
     }
