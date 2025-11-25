@@ -4,6 +4,8 @@
 TagManager:
   serializedVersion: 3
   tags:
+  - item
+  - placement
   - Key
   - Gate
   - Complete
@@ -14,10 +16,10 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
-  - 
-  - 
+  - light_layer_blueprint
+  - light_layer_nightmare
+  - interactable
+  - outline
   - 
   - 
   - 
