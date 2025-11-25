@@ -6,6 +6,12 @@ public class TeleportManager : MonoBehaviour
     public int currentWorld = 0;
     public CharacterController controller;
     public Vector3 worldOffset = new (100, 0, 0);
+
+    // Audio source for teleporter
+    [SerializeField] private AudioSource teleporterAudioSource;
+    [SerializeField] private AudioClip teleporterCollisionClip;
+
+
     private void Awake()
     {
         if (instance != null && instance != this)
@@ -35,6 +41,13 @@ public class TeleportManager : MonoBehaviour
 
     public void Teleport()
     {
+        // For the teleporter sound effects
+        if (teleporterAudioSource != null && teleporterCollisionClip != null)
+        {
+            teleporterAudioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+            teleporterAudioSource.PlayOneShot(teleporterCollisionClip);
+        }
+        
         Vector3 p = controller.transform.position;
         controller.enabled = false;
         Debug.Log("off");

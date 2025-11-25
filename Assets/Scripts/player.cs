@@ -1,10 +1,12 @@
 using System;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class player : MonoBehaviour
 {
     public static player instance;
     public CharacterController cc;
+
     private Vector3 moveVector;
     private Transform cameraTransform;
     private Vector3 horizontalVec;
@@ -14,6 +16,16 @@ public class player : MonoBehaviour
     [SerializeField] private float gravity = -10.0f;
     [SerializeField] private float jumpStrength = 10.0f;
     [SerializeField] private float sprintMult = 1.5f;
+
+    // Audio source for item pickup
+    [SerializeField] private AudioSource pickupAudioSource;
+    [SerializeField] private AudioClip pickupAudioClip;
+
+    // Audio source for complete level
+    [SerializeField] private AudioSource yayAudioSource;
+    [SerializeField] private AudioClip yayAudioClip;
+
+    public bool hasKey = false;
 
     private void Awake()
     {
@@ -32,8 +44,11 @@ public class player : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
     }
+    private void Update()
+    {
+        Raycast();
+    }
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         Movement();
@@ -77,5 +92,49 @@ public class player : MonoBehaviour
         }
 
         cc.Move(moveSpeed * Time.deltaTime * moveVector);
+    }
+    public void Raycast() // opening gate
+    {
+        if (cameraTransform)
+        {
+            RaycastHit hit;
+            if (Physics.Raycast(cameraTransform.position, cameraTransform.TransformDirection(Vector3.forward), out hit, 10))
+            {
+                if (hit.collider.gameObject.CompareTag("Gate") && hasKey)
+                {
+                    hasKey = false;
+                    Destroy(hit.collider.gameObject);
+                    Debug.Log("gate opened");
+                }
+            }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("trigger");
+        if (other.gameObject.CompareTag("Key"))
+        {
+            hasKey = true;
+            Destroy(other.gameObject);
+            Debug.Log("key collected");
+            // For the item pickup sound effects
+            if (pickupAudioSource != null && pickupAudioClip != null)
+            {
+                pickupAudioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+                pickupAudioSource.PlayOneShot(pickupAudioClip);
+                Debug.Log("play audio");
+            }
+        }
+        // Placeholder to move the player back to the starting position, this could get removed in the future
+        else if (other.gameObject.CompareTag("Complete"))
+        {
+            Debug.Log("level complete");
+            if (yayAudioSource != null && yayAudioClip != null)
+            {
+                other.transform.position = new Vector3(9, 2, -16);
+                yayAudioSource.PlayOneShot(yayAudioClip);
+            }
+        }
     }
 }
