@@ -25,6 +25,7 @@ public class player : MonoBehaviour
     [SerializeField] private AudioSource yayAudioSource;
     [SerializeField] private AudioClip yayAudioClip;
 
+
     public bool hasKey = false;
 
     private void Awake()
