@@ -1,16 +1,17 @@
 using UnityEngine;
 
-public class TeleportManager : MonoBehaviour
+public class SceneManager : MonoBehaviour
 {
-    public static TeleportManager instance;
+    public static SceneManager instance;
     public int currentWorld = 0;
     public CharacterController controller;
     public Vector3 worldOffset = new (100, 0, 0);
 
+    public Vector3 playerSpawn = new(0, 201, -4.85f); // change this with checkpoint
+
     // Audio source for teleporter
     [SerializeField] private AudioSource teleporterAudioSource;
     [SerializeField] private AudioClip teleporterCollisionClip;
-
 
     private void Awake()
     {
