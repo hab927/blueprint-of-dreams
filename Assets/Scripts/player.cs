@@ -47,6 +47,13 @@ public class player : MonoBehaviour
     private void Update()
     {
         Raycast();
+
+        if (transform.position.y < 100)
+        {
+            cc.enabled = false;
+            cc.transform.position = SceneManager.instance.playerSpawn;
+            cc.enabled = true;
+        }
     }
 
     void FixedUpdate()
@@ -75,9 +82,12 @@ public class player : MonoBehaviour
         }
 
         cameraTransform = MouseCamera.instance.transform;
-        horizontalVec = Input.GetAxis("Horizontal") * new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
-        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x + Math.Abs(cameraTransform.up.x), 0, cameraTransform.forward.z + Math.Abs(cameraTransform.up.z));
-        moveVector = new Vector3(horizontalVec.x + forwardVec.x, 0, horizontalVec.z + forwardVec.z);
+
+        horizontalVec = Input.GetAxis("Horizontal") * new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
+        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
+
+        moveVector = horizontalVec + forwardVec;
+
         if (moveVector.magnitude > 1)
         {
             moveVector = moveVector.normalized;
@@ -135,6 +145,17 @@ public class player : MonoBehaviour
                 other.transform.position = new Vector3(9, 2, -16);
                 yayAudioSource.PlayOneShot(yayAudioClip);
             }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Debug.Log("hit");
+        if (hit.gameObject.CompareTag("Checkpoint"))
+        {
+            Collider col = hit.gameObject.GetComponent<Collider>();
+            SceneManager.instance.playerSpawn = new Vector3(transform.position.x, col.bounds.max.y + 3, transform.position.z);
+            Debug.Log("checkpoint");
         }
     }
 }
