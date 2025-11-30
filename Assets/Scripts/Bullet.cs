@@ -7,13 +7,13 @@ public class Bullet : MonoBehaviour
     {
         
     }
+
 /*
-    // Testing
     void OnCollisionEnter(Collision collision)
     {
         if(collision.gameObject.CompareTag("Player") || collision.gameObject.CompareTag("MainCamera"))
         {
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 */
