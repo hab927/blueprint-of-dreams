@@ -10,6 +10,7 @@ TagManager:
   - Gate
   - Complete
   - Cube
+  - Checkpoint
   layers:
   - Default
   - TransparentFX
