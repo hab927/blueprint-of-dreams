@@ -11,6 +11,8 @@ TagManager:
   - Complete
   - Cube
   - Checkpoint
+  - LiminalBullet
+  - DreamyBullet
   layers:
   - Default
   - TransparentFX
