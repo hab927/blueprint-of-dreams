@@ -33,6 +33,7 @@ public class DataManager : MonoBehaviour
         NewGame();
         this.dataObjects = FindAllDataObjects();
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        Debug.Log(Application.persistentDataPath);
     }
 
     public void NewGame()

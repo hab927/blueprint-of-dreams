@@ -26,6 +26,7 @@ public class player : MonoBehaviour, DataInterface
     [SerializeField] private AudioClip yayAudioClip;
 
     public bool hasKey = false;
+    public bool gateOpen = false;
 
     private void Awake()
     {
@@ -117,6 +118,7 @@ public class player : MonoBehaviour, DataInterface
                     hasKey = false;
                     Destroy(hit.collider.gameObject);
                     Debug.Log("gate opened");
+                    gateOpen = true;
                 }
             }
         }
@@ -165,12 +167,23 @@ public class player : MonoBehaviour, DataInterface
     public void LoadData(GameData data)
     {
         cc.enabled = false;
-        //cc.transform.position = *some loaded variable for position*
+        cc.transform.position = data.playerPosition;
         cc.enabled = true;
+
+        hasKey = data.hasKey;
+        gateOpen = data.gateOpen;
+        if (data.gateOpen)
+        {
+            GameObject gate = GameObject.FindWithTag("Gate");
+            Debug.Log(gate);
+            Destroy(gate);
+        }
     }
 
     public void SaveData(ref GameData data)
     {
         data.playerPosition = transform.position;
+        data.hasKey = hasKey;
+        data.gateOpen = gateOpen;
     }
 }
