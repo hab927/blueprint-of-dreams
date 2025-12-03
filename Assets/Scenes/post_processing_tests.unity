@@ -1886,6 +1886,8 @@ MonoBehaviour:
   sens: 750
   x: 0
   y: 0
+  dreamyEffect: {fileID: 0}
+  liminalEffect: {fileID: 0}
 --- !u!114 &1127938826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2027,6 +2029,7 @@ MonoBehaviour:
     m_Bits: 256
   hand_offset: {x: 0.5, y: -0.35, z: 0.5}
   grabbed_item: {fileID: 0}
+  item_held: 0
 --- !u!1 &1388541048
 GameObject:
   m_ObjectHideFlags: 0
