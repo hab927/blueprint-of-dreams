@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TreeEditor;
 using Unity.Mathematics;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -32,8 +33,12 @@ public class interaction_object_functions : MonoBehaviour
         }
     }
 
-    public void placeItem(Transform item, Vector3 position_offset)
+    public bool placeItem(Transform item, Vector3 position_offset)
     {
+        if(transform.childCount > 0)
+        {
+            return false;
+        }
         item.parent = transform;
         item.localPosition = position_offset;
         item.localRotation = quaternion.identity;
@@ -41,6 +46,8 @@ public class interaction_object_functions : MonoBehaviour
         {
             On_Item_Placed.Invoke();
         }
+
+        return true;
     }
 
     public void dropItem(Transform item, Vector3 position_offset)

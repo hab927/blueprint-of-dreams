@@ -150,7 +150,7 @@ public class player : MonoBehaviour
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        Debug.Log("hit");
+        //Debug.Log("hit");
         if (hit.gameObject.CompareTag("Checkpoint"))
         {
             Collider col = hit.gameObject.GetComponent<Collider>();
