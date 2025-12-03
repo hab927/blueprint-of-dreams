@@ -71,11 +71,17 @@ public class SceneManager : MonoBehaviour
         while (startTime < blinkTime)
         {
             yield return new WaitForEndOfFrame();
-            float lerp_value =  Mathf.Lerp(0f, 1f, startTime / blinkTime);
+            float lerp_value = Mathf.Lerp(0f, 1f, startTime / blinkTime);
             startTime += Time.deltaTime;
-            vignette_effect.intensity.value = lerp_value;
+            if (vignette_effect)
+            {
+                vignette_effect.intensity.value = lerp_value;
+            }
         }
-        vignette_effect.intensity.value = 1f;
+        if (vignette_effect)
+        {
+            vignette_effect.intensity.value = 1f;
+        }
         Teleport();
         startTime = 0f;
         while (startTime < blinkTime)
@@ -83,9 +89,15 @@ public class SceneManager : MonoBehaviour
             yield return new WaitForEndOfFrame();
             float lerp_value = Mathf.Lerp(1f, 0f, startTime / blinkTime);
             startTime += Time.deltaTime;
-            vignette_effect.intensity.value = lerp_value;
+            if (vignette_effect)
+            {
+                vignette_effect.intensity.value = lerp_value;
+            }
         }
-        vignette_effect.intensity.value = 0f;
+        if (vignette_effect)
+        {
+            vignette_effect.intensity.value = 0f;
+        }
 
         yield return null;
     }
