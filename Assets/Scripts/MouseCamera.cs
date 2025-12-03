@@ -14,7 +14,7 @@ public class MouseCamera : MonoBehaviour
 
     private void Awake()
     {
-        if(dreamyEffect && liminalEffect)
+        if (dreamyEffect && liminalEffect)
         {
             dreamyEffect.enabled = false;
             liminalEffect.enabled = false;

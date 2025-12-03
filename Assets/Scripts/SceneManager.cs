@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class SceneManager : MonoBehaviour
+public class SceneManager : MonoBehaviour, DataInterface
 {
     public static SceneManager instance;
     public int currentWorld = 0;
@@ -61,6 +61,16 @@ public class SceneManager : MonoBehaviour
             {
                 this.enabled = false;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.F5))
+        {
+            DataManager.instance.SaveGame();
+        }
+
+        if (Input.GetKeyDown(KeyCode.F6))
+        {
+            DataManager.instance.LoadGame();
         }
     }
 
@@ -129,5 +139,17 @@ public class SceneManager : MonoBehaviour
         controller.enabled = true;
         isTeleporting = false;
         Debug.Log("on");
+    }
+
+    public void LoadData(GameData data)
+    {
+        this.playerSpawn = data.playerSpawn;
+        this.currentWorld = data.currentWorld;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerSpawn = this.playerSpawn;
+        data.currentWorld = this.currentWorld;
     }
 }
