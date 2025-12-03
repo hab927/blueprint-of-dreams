@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class player : MonoBehaviour
+public class player : MonoBehaviour, DataInterface
 {
     public static player instance;
     public CharacterController cc;
@@ -17,7 +17,16 @@ public class player : MonoBehaviour
     [SerializeField] private float jumpStrength = 10.0f;
     [SerializeField] private float sprintMult = 1.5f;
 
+    // Audio source for item pickup
+    [SerializeField] private AudioSource pickupAudioSource;
+    [SerializeField] private AudioClip pickupAudioClip;
+
+    // Audio source for complete level
+    [SerializeField] private AudioSource yayAudioSource;
+    [SerializeField] private AudioClip yayAudioClip;
+
     public bool hasKey = false;
+    public bool gateOpen = false;
 
     private void Awake()
     {
@@ -39,6 +48,15 @@ public class player : MonoBehaviour
     private void Update()
     {
         Raycast();
+
+        // death
+        if (transform.position.y < 100)
+        {
+            cc.enabled = false;
+            cc.transform.position = SceneManager.instance.playerSpawn;
+            cc.enabled = true;
+            SceneManager.instance.currentWorld = 0;
+        }
     }
 
     void FixedUpdate()
@@ -67,9 +85,12 @@ public class player : MonoBehaviour
         }
 
         cameraTransform = MouseCamera.instance.transform;
-        horizontalVec = Input.GetAxis("Horizontal") * new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z);
-        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x + cameraTransform.up.x, 0, cameraTransform.forward.z + cameraTransform.up.z);
-        moveVector = new Vector3(horizontalVec.x + forwardVec.x, 0, horizontalVec.z + forwardVec.z);
+
+        horizontalVec = Input.GetAxis("Horizontal") * new Vector3(cameraTransform.right.x, 0, cameraTransform.right.z).normalized;
+        forwardVec = Input.GetAxis("Vertical") * new Vector3(cameraTransform.forward.x, 0, cameraTransform.forward.z).normalized;
+
+        moveVector = horizontalVec + forwardVec;
+
         if (moveVector.magnitude > 1)
         {
             moveVector = moveVector.normalized;
@@ -97,6 +118,7 @@ public class player : MonoBehaviour
                     hasKey = false;
                     Destroy(hit.collider.gameObject);
                     Debug.Log("gate opened");
+                    gateOpen = true;
                 }
             }
         }
@@ -110,6 +132,58 @@ public class player : MonoBehaviour
             hasKey = true;
             Destroy(other.gameObject);
             Debug.Log("key collected");
+            // For the item pickup sound effects
+            if (pickupAudioSource != null && pickupAudioClip != null)
+            {
+                pickupAudioSource.pitch = UnityEngine.Random.Range(0.8f, 1.2f);
+                pickupAudioSource.PlayOneShot(pickupAudioClip);
+                Debug.Log("play audio");
+            }
         }
+        // Placeholder to move the player back to the starting position, this could get removed in the future
+        else if (other.gameObject.CompareTag("Complete"))
+        {
+            Debug.Log("level complete");
+            if (yayAudioSource != null && yayAudioClip != null)
+            {
+                other.transform.position = new Vector3(9, 2, -16);
+                yayAudioSource.PlayOneShot(yayAudioClip);
+            }
+        }
+    }
+
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        //Debug.Log("hit");
+        if (hit.gameObject.CompareTag("Checkpoint"))
+        {
+            Collider col = hit.gameObject.GetComponent<Collider>();
+            SceneManager.instance.playerSpawn = new Vector3(transform.position.x, col.bounds.max.y + 3, transform.position.z);
+            Debug.Log("checkpoint");
+        }
+    }
+
+    // save data stuff
+    public void LoadData(GameData data)
+    {
+        cc.enabled = false;
+        cc.transform.position = data.playerPosition;
+        cc.enabled = true;
+
+        hasKey = data.hasKey;
+        gateOpen = data.gateOpen;
+        if (data.gateOpen)
+        {
+            GameObject gate = GameObject.FindWithTag("Gate");
+            Debug.Log(gate);
+            Destroy(gate);
+        }
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = transform.position;
+        data.hasKey = hasKey;
+        data.gateOpen = gateOpen;
     }
 }
