@@ -14,8 +14,11 @@ public class MouseCamera : MonoBehaviour
 
     private void Awake()
     {
-        dreamyEffect.enabled = false;
-        liminalEffect.enabled = false;
+        if (dreamyEffect && liminalEffect)
+        {
+            dreamyEffect.enabled = false;
+            liminalEffect.enabled = false;
+        }
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);

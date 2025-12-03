@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class player : MonoBehaviour
+public class player : MonoBehaviour, DataInterface
 {
     public static player instance;
     public CharacterController cc;
@@ -48,11 +48,13 @@ public class player : MonoBehaviour
     {
         Raycast();
 
+        // death
         if (transform.position.y < 100)
         {
             cc.enabled = false;
             cc.transform.position = SceneManager.instance.playerSpawn;
             cc.enabled = true;
+            SceneManager.instance.currentWorld = 0;
         }
     }
 
@@ -157,5 +159,18 @@ public class player : MonoBehaviour
             SceneManager.instance.playerSpawn = new Vector3(transform.position.x, col.bounds.max.y + 3, transform.position.z);
             Debug.Log("checkpoint");
         }
+    }
+
+    // save data stuff
+    public void LoadData(GameData data)
+    {
+        cc.enabled = false;
+        //cc.transform.position = *some loaded variable for position*
+        cc.enabled = true;
+    }
+
+    public void SaveData(ref GameData data)
+    {
+        data.playerPosition = transform.position;
     }
 }
