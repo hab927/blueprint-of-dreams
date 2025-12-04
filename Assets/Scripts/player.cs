@@ -44,6 +44,11 @@ public class player : MonoBehaviour, DataInterface
     void Start()
     {
         cc = GetComponent<CharacterController>();
+
+        if (DataManager.instance)
+        {
+            LoadData(DataManager.instance.gameData);
+        }
     }
     private void Update()
     {
@@ -99,7 +104,7 @@ public class player : MonoBehaviour, DataInterface
 
         if (Input.GetAxis("Sprint") > 0)
         {
-            Debug.Log("sprinting");
+            //Debug.Log("sprinting");
             moveVector.x *= sprintMult;
             moveVector.z *= sprintMult;
         }
@@ -126,7 +131,7 @@ public class player : MonoBehaviour, DataInterface
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
+        //Debug.Log("trigger");
         if (other.gameObject.CompareTag("Key"))
         {
             hasKey = true;
@@ -154,7 +159,7 @@ public class player : MonoBehaviour, DataInterface
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //Debug.Log("hit");
+        Debug.Log("hit");
         if (hit.gameObject.CompareTag("Checkpoint"))
         {
             Collider col = hit.gameObject.GetComponent<Collider>();
