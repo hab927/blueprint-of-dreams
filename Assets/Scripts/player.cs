@@ -44,6 +44,11 @@ public class player : MonoBehaviour, DataInterface
     void Start()
     {
         cc = GetComponent<CharacterController>();
+
+        if (DataManager.instance)
+        {
+            LoadData(DataManager.instance.gameData);
+        }
     }
     private void Update()
     {
@@ -154,7 +159,7 @@ public class player : MonoBehaviour, DataInterface
 
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        //Debug.Log("hit");
+        Debug.Log("hit");
         if (hit.gameObject.CompareTag("Checkpoint"))
         {
             Collider col = hit.gameObject.GetComponent<Collider>();
