@@ -17,5 +17,13 @@ public class teleport_enabler : MonoBehaviour
             SM.enabled = true;
         }
     }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            SM.enabled = false;
+        }
+    }
     
 }
