@@ -1822,8 +1822,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6580fd41f2a1884a86d835dbaa24362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pedestal_component
-  door_manager: {fileID: 1883155089}
-  index_order: 1
 --- !u!1 &841497776
 GameObject:
   m_ObjectHideFlags: 0
@@ -2781,8 +2779,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6580fd41f2a1884a86d835dbaa24362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pedestal_component
-  door_manager: {fileID: 1883155089}
-  index_order: 0
 --- !u!1 &1399301370
 GameObject:
   m_ObjectHideFlags: 0
@@ -3608,15 +3604,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08ef8aedc7559b74cba6bc4296711989, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::door_behaviour
-  code:
-  - {fileID: 1475453868}
-  - {fileID: 192567843}
-  - {fileID: 616982567}
-  order:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  door: {fileID: 537795655}
 --- !u!1 &1923433254
 GameObject:
   m_ObjectHideFlags: 0
@@ -3777,9 +3764,8 @@ MonoBehaviour:
     playerPosition: {x: 0, y: 338, z: 0}
     playerSpawn: {x: 0, y: 338, z: 0}
     hasKey: 0
-    currentWorld: 0
+    currentWorld: 94
     gateOpen: 0
-    currentLevel: Level2
   fileName: data.save
 --- !u!4 &1972262577
 Transform:
@@ -4083,8 +4069,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6580fd41f2a1884a86d835dbaa24362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::pedestal_component
-  door_manager: {fileID: 1883155089}
-  index_order: 2
 --- !u!1 &2111544588
 GameObject:
   m_ObjectHideFlags: 0
