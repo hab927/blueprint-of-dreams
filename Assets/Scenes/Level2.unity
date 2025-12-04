@@ -1856,7 +1856,7 @@ Transform:
   m_GameObject: {fileID: 841497776}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -48.1, y: 341.3, z: 0}
+  m_LocalPosition: {x: 0, y: 338, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3476,52 +3476,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1703685839
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1703685841}
-  - component: {fileID: 1703685840}
-  m_Layer: 0
-  m_Name: LevelManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1703685840
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703685839}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0eda8741b4680ee4ab6430773209dde1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LevelManager
-  currentLevel: Level1
-  sceneName: 
---- !u!4 &1703685841
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1703685839}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 658.6025, y: 252.42557, z: -705.8811}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1774215035
 GameObject:
   m_ObjectHideFlags: 0
@@ -3588,7 +3542,7 @@ MonoBehaviour:
   currentWorld: 0
   controller: {fileID: 0}
   worldOffset: {x: 0, y: 0, z: -120}
-  playerSpawn: {x: 0, y: 1, z: 0}
+  playerSpawn: {x: 0, y: 338, z: 0}
   transition_time: 0.3
   vignette_volume: {fileID: 1335050466}
   vignette_effect: {fileID: 0}
@@ -3604,7 +3558,7 @@ Transform:
   m_GameObject: {fileID: 1812821723}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.1, y: 337, z: 0}
+  m_LocalPosition: {x: 4.1, y: 337.6, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3820,12 +3774,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DataManager
   gameData:
-    playerPosition: {x: 0, y: 201, z: -4.85}
-    playerSpawn: {x: 0, y: 201, z: -4.85}
+    playerPosition: {x: 0, y: 338, z: 0}
+    playerSpawn: {x: 0, y: 338, z: 0}
     hasKey: 0
     currentWorld: 0
     gateOpen: 0
-    currentLevel: Level1
+    currentLevel: Level2
   fileName: data.save
 --- !u!4 &1972262577
 Transform:
@@ -4481,4 +4435,3 @@ SceneRoots:
   - {fileID: 1624974275}
   - {fileID: 440163562}
   - {fileID: 1972262577}
-  - {fileID: 1703685841}
