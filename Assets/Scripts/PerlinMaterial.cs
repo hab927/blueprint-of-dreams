@@ -8,7 +8,7 @@ public class PerlinMaterial : MonoBehaviour
     public int width = 256;
     public int height = 256;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Update()
+    void Start()
     {
         Renderer renderer = GetComponent<Renderer>();
         renderer.material.mainTexture = GenerateTexture();
@@ -35,8 +35,8 @@ public class PerlinMaterial : MonoBehaviour
     Color CalculateColor (int x, int y)
     {
         // having these being decimal values creates better variations and perlin coordinations
-        float xCoord = (float)x / width * 3.0f;
-        float yCoord = (float)y / height * 7.0f;
+        float xCoord = (float)x / width * 5.0f;
+        float yCoord = (float)y / height * 5.0f;
 
         // this would create either white, black, or a shade of gray when generating
         float sample = Mathf.PerlinNoise(xCoord, yCoord);
