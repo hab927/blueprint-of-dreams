@@ -75,10 +75,8 @@ public class player_hand_manager : MonoBehaviour
                         if (grabbed_item != null)
                         {
                             //UnityEngine.Debug.Log("placed an item!");
-                            bool placed = object_behavior.placeItem(grabbed_item, new Vector3(0, 0.5f, 0));
-                            if(placed)
+                            if(object_behavior.placeItem(grabbed_item, new Vector3(0, 0.5f, 0)))
                             {
-                                //UnityEngine.Debug.Log("nulling item");
                                 grabbed_item = null;
                             }
                             break;

@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -12,7 +14,7 @@ public class SceneManager : MonoBehaviour, DataInterface
     public Vector3 playerSpawn = new(0, 201, -4.85f); // change this with checkpoint
 
     private bool isTeleporting = false;
-    public float transition_time = 0.2f;
+    public float transition_time = 1.2f;
 
     [SerializeField] private Volume vignette_volume; // Assign your Volume in Inspector
     public Vignette vignette_effect;
@@ -23,7 +25,7 @@ public class SceneManager : MonoBehaviour, DataInterface
 
     private void Awake()
     {
-        if (!vignette_volume || !vignette_volume.profile)
+        if (!vignette_volume.profile)
         {
             Debug.LogError("Vignette profile not assigned.");
         }
@@ -39,7 +41,6 @@ public class SceneManager : MonoBehaviour, DataInterface
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -47,19 +48,19 @@ public class SceneManager : MonoBehaviour, DataInterface
     void Start()
     {
         controller = player.instance.GetComponent<CharacterController>();
-
-        if (DataManager.instance)
-        {
-            LoadData(DataManager.instance.gameData);
-        }
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && !isTeleporting)
         {
-            Teleport();
+            StartCoroutine(blink(transition_time));
+            if (one_way_teleport)
+            {
+                this.enabled = false;
+            }
         }
 
         if (Input.GetKeyDown(KeyCode.F5))
@@ -71,6 +72,44 @@ public class SceneManager : MonoBehaviour, DataInterface
         {
             DataManager.instance.LoadGame();
         }
+    }
+
+    public IEnumerator blink(float blinkTime)
+    {
+        isTeleporting = true;
+        float startTime = 0f;
+        while (startTime < blinkTime)
+        {
+            yield return new WaitForEndOfFrame();
+            float lerp_value = Mathf.Lerp(0f, 1f, startTime / blinkTime);
+            startTime += Time.deltaTime;
+            if (vignette_effect)
+            {
+                vignette_effect.intensity.value = lerp_value;
+            }
+        }
+        if (vignette_effect)
+        {
+            vignette_effect.intensity.value = 1f;
+        }
+        Teleport();
+        startTime = 0f;
+        while (startTime < blinkTime)
+        {
+            yield return new WaitForEndOfFrame();
+            float lerp_value = Mathf.Lerp(1f, 0f, startTime / blinkTime);
+            startTime += Time.deltaTime;
+            if (vignette_effect)
+            {
+                vignette_effect.intensity.value = lerp_value;
+            }
+        }
+        if (vignette_effect)
+        {
+            vignette_effect.intensity.value = 0f;
+        }
+
+        yield return null;
     }
 
     public void Teleport()
@@ -98,6 +137,7 @@ public class SceneManager : MonoBehaviour, DataInterface
             Debug.Log("translated to world 0");
         }
         controller.enabled = true;
+        isTeleporting = false;
         Debug.Log("on");
     }
 
