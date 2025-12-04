@@ -48,7 +48,11 @@ public class SceneManager : MonoBehaviour, DataInterface
     void Start()
     {
         controller = player.instance.GetComponent<CharacterController>();
-        
+
+        if (DataManager.instance)
+        {
+            LoadData(DataManager.instance.gameData);
+        }
     }
 
     // Update is called once per frame

@@ -21,7 +21,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public void StartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Test 1");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level1");
     }
 
     public void LoadScene(string level)

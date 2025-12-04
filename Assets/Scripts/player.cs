@@ -44,6 +44,11 @@ public class player : MonoBehaviour, DataInterface
     void Start()
     {
         cc = GetComponent<CharacterController>();
+
+        if (DataManager.instance)
+        {
+            LoadData(DataManager.instance.gameData);
+        }
     }
     private void Update()
     {
