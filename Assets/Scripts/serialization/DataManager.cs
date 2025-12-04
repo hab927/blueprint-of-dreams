@@ -12,7 +12,7 @@ public class DataManager : MonoBehaviour
     private List<DataInterface> dataObjects;
 
     [Header("File Storage Config")]
-    [SerializeField] private string fileName = "data.save";
+    [SerializeField] private string fileName;
 
     private FileDataHandler dataHandler;
 
@@ -25,14 +25,15 @@ public class DataManager : MonoBehaviour
         else
         {
             instance = this;
-            DontDestroyOnLoad(this);
         }
     }
 
     void Start()
     {
+        NewGame();
         this.dataObjects = FindAllDataObjects();
         this.dataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
+        Debug.Log(Application.persistentDataPath);
     }
 
     public void NewGame()
@@ -50,7 +51,6 @@ public class DataManager : MonoBehaviour
             NewGame();
         }
 
-        this.dataObjects = FindAllDataObjects();
         foreach (DataInterface dataObj in this.dataObjects)
         {
             dataObj.LoadData(gameData);
@@ -59,19 +59,18 @@ public class DataManager : MonoBehaviour
 
     public void SaveGame()
     {
-        this.dataObjects = FindAllDataObjects();
+        dataHandler.Save(gameData);
+
         foreach (DataInterface dataObj in this.dataObjects)
         {
             dataObj.SaveData(ref gameData);
         }
-
-        dataHandler.Save(gameData);
     }
 
     private void OnApplicationQuit()
     {
-        //SaveGame();
-        //Debug.Log(Application.persistentDataPath);
+        SaveGame();
+        Debug.Log(Application.persistentDataPath);
     }
 
     private List<DataInterface> FindAllDataObjects()

@@ -10,7 +10,6 @@ public class GameData
     public bool hasKey;
     public int currentWorld;
     public bool gateOpen;
-    public string currentLevel;
 
     public GameData()
     {
@@ -19,6 +18,5 @@ public class GameData
         this.hasKey = false;
         this.currentWorld = 0;
         this.gateOpen = false;
-        this.currentLevel = "Level1";
-}
+    }
 }
