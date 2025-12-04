@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class player : MonoBehaviour, DataInterface
+public class player : MonoBehaviour
 {
     public static player instance;
     public CharacterController cc;
@@ -26,7 +26,6 @@ public class player : MonoBehaviour, DataInterface
     [SerializeField] private AudioClip yayAudioClip;
 
     public bool hasKey = false;
-    public bool gateOpen = false;
 
     private void Awake()
     {
@@ -49,13 +48,11 @@ public class player : MonoBehaviour, DataInterface
     {
         Raycast();
 
-        // death
         if (transform.position.y < 100)
         {
             cc.enabled = false;
             cc.transform.position = SceneManager.instance.playerSpawn;
             cc.enabled = true;
-            SceneManager.instance.currentWorld = 0;
         }
     }
 
@@ -118,7 +115,6 @@ public class player : MonoBehaviour, DataInterface
                     hasKey = false;
                     Destroy(hit.collider.gameObject);
                     Debug.Log("gate opened");
-                    gateOpen = true;
                 }
             }
         }
@@ -161,29 +157,5 @@ public class player : MonoBehaviour, DataInterface
             SceneManager.instance.playerSpawn = new Vector3(transform.position.x, col.bounds.max.y + 3, transform.position.z);
             Debug.Log("checkpoint");
         }
-    }
-
-    // save data stuff
-    public void LoadData(GameData data)
-    {
-        cc.enabled = false;
-        cc.transform.position = data.playerPosition;
-        cc.enabled = true;
-
-        hasKey = data.hasKey;
-        gateOpen = data.gateOpen;
-        if (data.gateOpen)
-        {
-            GameObject gate = GameObject.FindWithTag("Gate");
-            Debug.Log(gate);
-            Destroy(gate);
-        }
-    }
-
-    public void SaveData(ref GameData data)
-    {
-        data.playerPosition = transform.position;
-        data.hasKey = hasKey;
-        data.gateOpen = gateOpen;
     }
 }
