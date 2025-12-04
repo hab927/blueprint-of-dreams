@@ -104,7 +104,7 @@ public class player : MonoBehaviour, DataInterface
 
         if (Input.GetAxis("Sprint") > 0)
         {
-            Debug.Log("sprinting");
+            //Debug.Log("sprinting");
             moveVector.x *= sprintMult;
             moveVector.z *= sprintMult;
         }
@@ -131,7 +131,7 @@ public class player : MonoBehaviour, DataInterface
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
+        //Debug.Log("trigger");
         if (other.gameObject.CompareTag("Key"))
         {
             hasKey = true;
