@@ -11,6 +11,8 @@ public class GameData
     public int currentWorld;
     public bool gateOpen;
     public string currentLevel;
+    public int saved_minutes;
+    public float saved_seconds;
 
     public GameData()
     {
@@ -20,5 +22,7 @@ public class GameData
         this.currentWorld = 0;
         this.gateOpen = false;
         this.currentLevel = "Level1";
+        this.saved_minutes = 0;
+        this.saved_seconds = 0f;
     }
 }

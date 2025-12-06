@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -51,7 +52,15 @@ public class SceneManager : MonoBehaviour, DataInterface
 
         if (DataManager.instance)
         {
+            
+            int cached_world = currentWorld;
             LoadData(DataManager.instance.gameData);
+            if (currentWorld != 0 && currentWorld != 1)
+            {
+                currentWorld = cached_world;
+            }
+            
+            
         }
     }
 
@@ -67,12 +76,20 @@ public class SceneManager : MonoBehaviour, DataInterface
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.F5))
+        if (Input.GetKeyDown(KeyCode.P))
         {
-            DataManager.instance.SaveGame();
+            if (DataManager.instance != null)
+            {
+                DataManager.instance.SaveGame();
+            }
+            else
+            {
+                Debug.Log("Can't save");
+            }
+
         }
 
-        if (Input.GetKeyDown(KeyCode.F6))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             DataManager.instance.LoadGame();
         }

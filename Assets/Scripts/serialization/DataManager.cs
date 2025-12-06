@@ -21,6 +21,7 @@ public class DataManager : MonoBehaviour
         if (instance != null && instance != this)
         {
             Destroy(this.gameObject);
+            Debug.Log("serializer_destroyed");
         }
         else
         {
@@ -43,7 +44,6 @@ public class DataManager : MonoBehaviour
     public void LoadGame()
     {
         this.gameData = dataHandler.Load();
-
         if (this.gameData == null)
         {
             Debug.Log("no game data found, initializing with default values");
@@ -55,6 +55,7 @@ public class DataManager : MonoBehaviour
         {
             dataObj.LoadData(gameData);
         }
+        
     }
 
     public void SaveGame()

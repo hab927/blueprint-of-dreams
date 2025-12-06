@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -24,6 +25,7 @@ public class player : MonoBehaviour, DataInterface
     // Audio source for complete level
     [SerializeField] private AudioSource yayAudioSource;
     [SerializeField] private AudioClip yayAudioClip;
+    
 
     public bool hasKey = false;
     public bool gateOpen = false;
@@ -49,6 +51,8 @@ public class player : MonoBehaviour, DataInterface
         {
             LoadData(DataManager.instance.gameData);
         }
+
+        
     }
     private void Update()
     {
@@ -61,6 +65,22 @@ public class player : MonoBehaviour, DataInterface
             cc.transform.position = SceneManager.instance.playerSpawn;
             cc.enabled = true;
             SceneManager.instance.currentWorld = 0;
+        }
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+            if(DataManager.instance != null)
+            {
+                DataManager.instance.SaveGame();
+                
+                Debug.Log("Game Saved");
+            }
+            else
+            {
+                Debug.Log("Save Failed");
+            }
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
         }
     }
 
@@ -104,7 +124,7 @@ public class player : MonoBehaviour, DataInterface
 
         if (Input.GetAxis("Sprint") > 0)
         {
-            Debug.Log("sprinting");
+            //Debug.Log("sprinting");
             moveVector.x *= sprintMult;
             moveVector.z *= sprintMult;
         }
@@ -131,7 +151,7 @@ public class player : MonoBehaviour, DataInterface
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("trigger");
+        //Debug.Log("trigger");
         if (other.gameObject.CompareTag("Key"))
         {
             hasKey = true;
@@ -149,6 +169,7 @@ public class player : MonoBehaviour, DataInterface
         else if (other.gameObject.CompareTag("Complete"))
         {
             Debug.Log("level complete");
+            StartCoroutine(beginLoadingMainMenu(1f));
             if (yayAudioSource != null && yayAudioClip != null)
             {
                 other.transform.position = new Vector3(9, 2, -16);
@@ -172,7 +193,13 @@ public class player : MonoBehaviour, DataInterface
     public void LoadData(GameData data)
     {
         cc.enabled = false;
-        cc.transform.position = data.playerPosition;
+        if(DataManager.instance.gameData.currentLevel == LevelManager.instance.currentLevel)
+        {
+            cc.transform.position = data.playerPosition;
+        }
+        Debug.Log("Manager: " +DataManager.instance.gameData.currentLevel);
+        Debug.Log("Current level: " + LevelManager.instance.currentLevel);
+
         cc.enabled = true;
 
         hasKey = data.hasKey;
@@ -190,5 +217,21 @@ public class player : MonoBehaviour, DataInterface
         data.playerPosition = transform.position;
         data.hasKey = hasKey;
         data.gateOpen = gateOpen;
+        data.currentLevel = LevelManager.instance.currentLevel;
+
+    }
+
+    public IEnumerator beginLoadingMainMenu(float waiter_time)
+    {
+        float currTime = 0f;
+        while (currTime < waiter_time)
+        {
+            yield return new WaitForEndOfFrame();
+            currTime += Time.deltaTime;
+        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Main Menu");
+        
     }
 }

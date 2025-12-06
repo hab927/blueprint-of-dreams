@@ -16,7 +16,7 @@ public class SceneSwitcher : MonoBehaviour
             instance = this;
         }
 
-        DontDestroyOnLoad(this.gameObject);
+        //DontDestroyOnLoad(this.gameObject);
     }
 
     public void StartGame()
@@ -26,6 +26,7 @@ public class SceneSwitcher : MonoBehaviour
 
     public void LoadScene(string level)
     {
+        LevelManager.instance.currentLevel = level;
         UnityEngine.SceneManagement.SceneManager.LoadScene(level);
     }
 

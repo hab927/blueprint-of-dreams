@@ -18,6 +18,13 @@ public class LevelManager : MonoBehaviour, DataInterface
             instance = this;
             DontDestroyOnLoad(gameObject);
         }
+        if (sceneName != "Main Menu")
+        {
+            if (sceneName != currentLevel)
+            {
+                currentLevel = sceneName;
+            }
+        }
     }
 
     // Update is called once per frame
